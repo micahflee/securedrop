@@ -175,7 +175,7 @@ DATABASE_FILE='$securedrop_root/db_development.sqlite'
 EOF
 
 # setup alembic.ini, for migrations
-sed 's|SQLALCHEMY_URL|sqlite://'"$securedrop_root"'/db_development.sqlite|g' alembic-sample.ini > alembic.ini
+sed 's|SQLALCHEMY_URL|sqlite:///'"$securedrop_root"'/db_development.sqlite|g' alembic-sample.ini > alembic.ini
 
 echo "Creating database tables..."
 SECUREDROP_ENV=development python -c 'import db; db.init_db()'
@@ -212,6 +212,7 @@ echo "To make sure everything works, try running the app:"
 echo ""
 echo "$ vagrant ssh"
 echo "$ cd /vagrant/securedrop"
+echo "$ alembic upgrade head"
 echo "$ python source.py &"
 echo "$ python journalist.py &"
 echo ""
