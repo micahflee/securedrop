@@ -174,6 +174,9 @@ DATABASE_FILE='$securedrop_root/db_development.sqlite'
 # DATABASE_PASSWORD = '$mysql_securedrop'
 EOF
 
+# setup alembic.ini, for migrations
+sed 's|SQLALCHEMY_URL|sqlite://'"$securedrop_root"'/db_development.sqlite|g' alembic-sample.ini > alembic.ini
+
 echo "Creating database tables..."
 SECUREDROP_ENV=development python -c 'import db; db.init_db()'
 

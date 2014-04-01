@@ -2,3 +2,4 @@
 .securedrop/
 # Virtualenv
 env/
+alembic.ini
