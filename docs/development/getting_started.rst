@@ -33,21 +33,7 @@ Ubuntu/Debian
 .. code:: sh
 
    sudo apt-get install -y build-essential libssl-dev libffi-dev python-dev \
-       dpkg-dev git linux-headers-$(uname -r) virtualbox
-
-We recommend using the latest stable version of Vagrant, ``1.8.5`` at the time
-of this writing, which might be newer than what is in your distro's package
-repositories. Older versions of Vagrant has been known to cause problems
-(`GitHub #932`_, `GitHub #1381`_). If ``apt-cache policy vagrant`` says your
-candidate version is not at least 1.8.5, you should download the current version
-from the `Vagrant Downloads page`_ and then install it.
-
-.. code:: sh
-
-    # If your OS vagrant is recent enough
-    sudo apt-get install vagrant
-    # OR this, if you downloaded the deb package.
-    sudo dpkg -i vagrant.deb
+       dpkg-dev git
 
 We recommend using the stable version of Docker CE (Community Edition) which can
 be installed via the official documentation links:
@@ -55,29 +41,9 @@ be installed via the official documentation links:
 * `Docker CE for Ubuntu`_
 * `Docker CE for Debian`_
 
-.. _`Vagrant Downloads page`: https://www.vagrantup.com/downloads.html
 .. _`GitHub #932`: https://github.com/freedomofpress/securedrop/pull/932
-.. _`GitHub #1381`: https://github.com/freedomofpress/securedrop/issues/1381
 .. _`Docker CE for Ubuntu`: https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/
 .. _`Docker CE for Debian`: https://docs.docker.com/engine/installation/linux/docker-ce/debian/
-
-.. warning:: We do not recommend installing vagrant-cachier. It destroys apt’s
-            state unless the VMs are always shut down/rebooted with Vagrant,
-            which conflicts with the tasks in the Ansible playbooks. The
-            instructions in Vagrantfile that would enable vagrant-cachier are
-            currently commented out.
-
-.. todo:: This warning is here because a common refrain during hackathons for
-          SecureDrop a while back was "setting up VMs is too slow, you should
-          use vagrant-cachier". We tried it and it had some nasty interactions
-          with Ansible, so we dropped it, and added this note to prevent other
-          people from making the same suggestion. Eventually, we should: (i)
-          Build our own base boxes to dramatically cut down on provisioning
-          times (ii) Remove this note as well as the commented vagrant-cachier
-          lines from the Vagrantfile
-
-VirtualBox should be at least version 5.x. See `GitHub #1381`_ for documentation
-of incompatibility with the older VirtualBox 4.x release series.
 
 Finally, install Ansible so it can be used with Vagrant to automatically
 provision VMs. We recommend installing Ansible from PyPi with ``pip`` to ensure
@@ -110,8 +76,6 @@ Mac OS X
 
 Install the dependencies for the development environment:
 
-#. Vagrant_
-#. VirtualBox_
 #. Ansible_
 #. Docker_
 #. rsync >= 3.1.0
@@ -140,8 +104,6 @@ different version, the path to ``virtualenvwrapper.sh`` will differ. Running
           file is) so that the command-line utilities ``virtualenvwrapper``
           provides are automatically available in the future.
 
-.. _Vagrant: http://www.vagrantup.com/downloads.html
-.. _VirtualBox: https://www.virtualbox.org/wiki/Downloads
 .. _Ansible: http://docs.ansible.com/intro_installation.html
 .. _Homebrew: https://brew.sh/
 .. _Docker: https://store.docker.com/editions/community/docker-ce-desktop-mac
