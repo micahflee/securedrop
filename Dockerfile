@@ -14,6 +14,8 @@ ADD . /securedrop
 
 # Run the securedrop-development ansible playbook
 RUN mkdir /etc/ansible && echo "development ansible_host=127.0.0.1" >> /etc/ansible/hosts
-RUN ansible-playbook --connection=local --limit development /securedrop/install_files/ansible-base/securedrop-development.yml
 
 WORKDIR /securedrop/securedrop
+
+RUN chown -R www-data:www-data /securedrop
+RUN ansible-playbook --connection=local --limit development /securedrop/install_files/ansible-base/securedrop-development.yml
