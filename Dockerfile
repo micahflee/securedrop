@@ -2,7 +2,7 @@ FROM ubuntu:14.04
 
 # Install ansible from pip
 RUN apt-get update
-RUN apt-get install -y build-essential libssl-dev libffi-dev python-dev dpkg-dev python-pip aptitude
+RUN apt-get install -y build-essential libssl-dev libffi-dev python-dev dpkg-dev python-pip aptitude supervisor
 RUN pip install --upgrade setuptools
 RUN pip install ansible==2.3.2.0
 
