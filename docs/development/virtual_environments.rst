@@ -1,11 +1,16 @@
 Virtual Environments
 ====================
 
-There are three predefined virtual environments in the Vagrantfile:
+There are three virtual environments:
 
 1. Development
 2. Staging
 3. Production
+
+The Development environment uses Docker, and the Staging and Production
+environments use Vagrant. (This means you can develop SecureDrop on a computer
+where you can't easily run Vagrant, like inside a Qubes AppVM. You still need
+Vagrant and VirtualBox to deploy Staging and Production.)
 
 This document explains the purpose of, and how to get started working with, each
 one.
@@ -23,22 +28,35 @@ one.
 Development
 -----------
 
-This VM is intended for rapid development on the SecureDrop web application. It
-syncs the top level of the SecureDrop repo to the ``/vagrant`` directory on the
-VM, which means you can use your favorite editor on your host machine to edit
-the code. This machine has no security hardening or monitoring.
+The Development environment uses Docker. It's intended for rapid development on
+the SecureDrop web application. It syncs the top level of the SecureDrop repo to
+the ``/securedrop`` directory in the container, which means you can use your
+favorite editor on your host machine to edit the code. This machine has no
+security hardening or monitoring.
 
-.. tip:: This is the default VM, so you don't need to specify the
-   ``development`` machine name when running commands like ``vagrant up`` and
-   ``vagrant ssh``. Of course, you can specify the name if you want to.
-
-To get started working with the development environment:
+To get started working with the development environment, first build the docker
+image. This will take awhile:
 
 .. code:: sh
 
-   vagrant up
-   vagrant ssh
-   cd /vagrant/securedrop
+   sudo docker build -t securedrop .
+
+Create your container for the first time:
+
+.. code:: sh
+   sudo docker run -it -v $(pwd):/securedrop -p 8000:8000 -p 8080:8080 -p 8081:8081 securedrop
+
+If you exit this container, run this to resume it:
+
+.. code:: sh
+
+   sudo docker start -ai securedrop-dev
+
+Here are important commands while you're developing:
+
+.. code:: sh
+
+   cd /securedrop/securedrop
    ./manage.py run         # run development servers
    ./manage.py reset       # resets the state of the development instance
    ./manage.py add-admin   # create a user to use when logging in to the Journalist Interface
@@ -57,7 +75,7 @@ Staging
 -------
 
 A compromise between the development and production environments. This
-configuration can be thought of as identical to the production enviornment, with
+configuration can be thought of as identical to the production environment, with
 a few exceptions:
 
 * The Debian packages are built from your local copy of the code, instead of
