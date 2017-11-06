@@ -44,7 +44,7 @@ image. This will take awhile:
 Create your container for the first time:
 
 .. code:: sh
-   sudo docker run -it -v $(pwd):/securedrop -p 8000:8000 -p 8080:8080 -p 8081:8081 securedrop
+   sudo docker run -it -v $(pwd):/securedrop -p 8000:8000 -p 8080:8080 -p 8081:8081 securedrop bash
 
 If you exit this container, run this to resume it:
 
